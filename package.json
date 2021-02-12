@@ -1,0 +1,9 @@
+{
+  "name": "jixin",
+  "version": "0.0.1",
+  "description": "mixin library for javascript/typescript",
+  "main": "index.js",
+  "author": "philomagi<tooppoo56@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
