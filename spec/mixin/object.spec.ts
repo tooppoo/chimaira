@@ -1,7 +1,7 @@
-import { mixin } from "@/mixin"
+import { mixinTo } from "@/mixinTo"
 
-describe("mixin object", () => {
-  it("to instance of a class", () => {
+describe("mixinTo object", () => {
+  it("apply to instance of a class", () => {
     class Num {
       constructor(private readonly value: number) { }
 
@@ -14,32 +14,32 @@ describe("mixin object", () => {
       }
     }
     const five = new Num(5)
-    const sut = mixin<Num>()({
+    const sut = mixinTo<Num>()({
       plus(n: Num): Num {
         return new Num(this.asNumber + n.asNumber)
       }
-    }).to(five)
+    }).apply(five)
 
     expect(sut.plus(new Num(4)).times(new Num(2))).toStrictEqual(new Num(18))
   })
 
-  it("to plain object", () => {
+  it("apply to plain object", () => {
     interface Num {
       value: number
     }
     const five: Num = {
       value: 5,
     }
-    const sut = mixin<Num>()({
+    const sut = mixinTo<Num>()({
       plus(n: Num): number {
         return this.value + n.value
       }
-    }).to(five)
+    }).apply(five)
 
     expect(sut.plus({ value: 10 })).toStrictEqual(15)
   })
   //
-  // it("to class", () => {
+  // it("apply to class", () => {
   //   class Num {
   //     constructor(private readonly value: number) {}
   //
@@ -51,10 +51,10 @@ describe("mixin object", () => {
   //     }
   //   }
   //
-  //   const sut = mixin<Num>()({
+  //   const sut = mixinTo<Num>()({
   //     add(n: Num): Num {
   //       return new Num(this.asNumber + n.asNumber)
   //     },
-  //   }).to(Num)
+  //   }).apply(Num)
   // })
 })
