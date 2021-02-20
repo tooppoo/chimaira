@@ -1,21 +1,16 @@
 
-interface Mixin<B extends object, M extends object> {
-  apply(base: B): M & B
-}
+type Constructor = new (...args: any[]) => any
 
-// export function mixinTo<B extends object, M extends object = object>(mixing: ThisType<B> & M): Mixin<B, M> {
-//   return {
-//     apply(base: B): M & B {
-//       const cln = Object.create(base)
-//
-//       return Object.assign(cln, mixing)
-//     }
-//   }
-// }
-export const mixinTo = <B extends object>() => <M extends object>(mixing: ThisType<B> & M): Mixin<B, M> => ({
-  apply(base: B): M & B {
-    const cln = Object.create(base)
+type MixedConstructor<T extends Constructor, M> = new (...args: ConstructorParameters<T>) => InstanceType<T> & M
 
-    return Object.assign(cln, mixing)
-  },
+export const mixinTo = <B extends Constructor>(klass: B) => ({
+  apply<M extends object>(mixing: ThisType<InstanceType<B>> & M): MixedConstructor<B, M> & B {
+    const constructor = function (args: ConstructorParameters<B>): InstanceType<B> & M {
+      const ins = new klass(args)
+
+      return Object.assign(ins, mixing)
+    }
+
+    return Object.assign(constructor, klass)
+  }
 })
