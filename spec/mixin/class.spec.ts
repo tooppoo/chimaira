@@ -1,4 +1,4 @@
-import { mixinTo } from "@/mixinTo"
+import { mixinTo } from "@/mixin-to"
 
 describe("mixinTo class", () => {
   describe("apply an object", () => {
