@@ -1,2 +1,2 @@
 
-export { mixinTo } from '@/mixin-to'
+export { mixinTo } from "./src/mixin-to"
